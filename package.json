@@ -1,0 +1,25 @@
+{
+  "name": "nextapp",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start -H O.O.O.O -p $PORT",
+    "start:dev": "next start",
+    "start:prod": "next start -p 80",
+    "export": "next build && next export"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "interweave": "^12.8.0",
+    "next": "10.0.6",
+    "nprogress": "^0.2.0",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-redux": "^7.2.2",
+    "react-toastify": "^7.0.4",
+    "redux": "^4.1.0",
+    "redux-thunk": "^2.3.0"
+  }
+}
