@@ -23,14 +23,14 @@ return (
         </div>
         <div className="sidebar-menu">
           <ul className="menu">
-            <li className="sidebar-item "><Link href="/"><a className="sidebar-link" ><i className="bi bi-grid-fill" /><span>Assign Oratag</span></a>
+            <li className="sidebar-item "><Link href="/"><a className="sidebar-link" ><i className="fas fa-plus"></i><span>Assign Oratag</span></a>
               </Link></li>
 
-            <li className="sidebar-item"><Link href="/search"><a className="sidebar-link"><i className="bi bi-image-fill" /><span>Search OraTag</span></a></Link></li>
+            <li className="sidebar-item"><Link href="/search"><a className="sidebar-link"><i className="fas fa-search-plus"></i><span>Search OraTag</span></a></Link></li>
 
-            <li className="sidebar-item"><Link href="/settings"><a className="sidebar-link"><i className="bi bi-basket-fill" /><span>Settings</span></a></Link></li>
+            <li className="sidebar-item"><Link href="/settings"><a className="sidebar-link"><i className="fas fa-cogs"></i><span>Settings</span></a></Link></li>
 
-            <li className="sidebar-item"><Link href="/logout"><a  className="sidebar-link"><i className="bi bi-basket-fill" /><span>Logout</span></a></Link></li>
+            <li className="sidebar-item"><Link href="/logout"><a  className="sidebar-link"><i className="fas fa-sign-out-alt"></i><span>Logout</span></a></Link></li>
           </ul>
         </div>
         <button className="sidebar-toggler btn x"><i data-feather="x" /></button>

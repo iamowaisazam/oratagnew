@@ -1,11 +1,18 @@
-import "../styles/custom.css";
-import "../styles/responsive.css";
-
 import Layout from "../components/Layout";
+import Router  from "next/router";
+
 import NProgress from 'nprogress';
 import { ToastContainer, toast } from 'react-toastify';
+
+
+// Custom Css
+import "../styles/fontawesome.css";
+import "../styles/custom.css";
+import "../styles/responsive.css";
 import 'react-toastify/dist/ReactToastify.css';
-import Router  from "next/router";
+
+
+
 
 NProgress.configure({ 
   minimum: 0.5 ,

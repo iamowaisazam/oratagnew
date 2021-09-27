@@ -14,9 +14,8 @@ export default function Layout(props) {
              <div id="app">
              <Sidebar />
              <div id="main" className="layout-navbar">
-             <Header/>
-    
-              {props.children}
+                <Header/>
+                 {props.children}
               </div>
             </div>
          </>);
