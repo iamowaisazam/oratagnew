@@ -2,60 +2,68 @@ import React from 'react';
 import Link from 'next/link'
 import Head from 'next/head'
 import {useRouter} from 'next/router'
-import Footer from '../components/Footer'
+import Layout from '../components/Admin/Layout';
+import axios from 'axios';
 
-export default function Home({products}) {
-  
+export default function Home() {
+
    const router = useRouter();
    if(router.isFallback){
        return <div>Loading</div>
    }
 
+   const handle = (e) => {
+      e.preventDefault();
+
+        const auth = {
+          username:e.target.username.value,
+          password:e.target.password.value,
+        }
+
+      axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+'/login',auth)
+      .then(function (response) {
+
+        console.log(response);
+
+      }).catch(function (error) {
+
+        alert((error.response.data.errors));
+      });
+      
+   }
+
   return (
     <>
-        <Head>
-            <title>Login</title>
-        </Head>
+    <Head>
+        <title> OraTag - Login</title>
+    </Head>
 
-          <div id="main-content">
-            <div className="page-heading">
-              <div className="page-title">
-                <div className="row">
-                  <div className="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Vertical Layout with Navbar</h3>
-                    <p className="text-subtitle text-muted">Navbar will appear in top of the page.</p>
-                  </div>
-                  <div className="col-12 col-md-6 order-md-2 order-first">
-                    <nav aria-label="breadcrumb" className="breadcrumb-header float-start float-lg-end">
-                      <ol className="breadcrumb">
-                        <li className="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                        <li className="breadcrumb-item active" aria-current="page">Layout Vertical Navbar
-                        </li>
-                      </ol>
-                    </nav>
-                  </div>
+    <div id="auth">
+       <div style={{'height':'100vh'}} className="container m-auto " >
+       <div className="row h-100">
+          <div className="col-12 col-md-8 m-auto py-5">
+            <div className="text-center" >
+            <h1 className="auth-title py-2">Welcome to OraTag </h1>
+            <form onSubmit={handle} >
+                <div className="form-group position-relative has-icon-left mb-4">
+                  <input required type="text" name="username" className="form-control form-control-xl" placeholder="Username" />
+                  <div className="form-control-icon"><i className="bi bi-person" /></div>
                 </div>
+              <div className="form-group position-relative has-icon-left mb-4">
+                <input required name="password" type="password" className="form-control form-control-xl" placeholder="Password" />
+                  <div className="form-control-icon">
+                    <i className="bi bi-shield-lock" />
+                  </div>
               </div>
-              <section className="section">
-                <div className="card">
-                  <div className="card-header">
-                    <h4 className="card-title">Example Content</h4>
-                  </div>
-                  <div className="card-body">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur quas omnis
-                    laudantium tempore
-                    exercitationem, expedita aspernatur sed officia asperiores unde tempora maxime odio
-                    reprehenderit
-                    distinctio incidunt! Vel aspernatur dicta consequatur!
-                  </div>
-                </div>
-              </section>
-            </div>
-           <Footer />
-          </div>
-      
-    </>
-  )
+              <button type="submit" className="btn btn-primary btn-block btn-lg shadow-lg mt-3">Sign In</button>
+            </form>   
+         </div>
+        </div>
+      </div>
+    </div>    
+  </div>
+ </>
+    )
 
 }
 

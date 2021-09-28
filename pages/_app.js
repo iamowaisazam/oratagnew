@@ -1,25 +1,21 @@
-import Layout from "../components/Layout";
+import { useEffect } from 'react';
 import Router  from "next/router";
 
 import NProgress from 'nprogress';
 import { ToastContainer, toast } from 'react-toastify';
 
-
 // Custom Css
 import "../styles/fontawesome.css";
+import "../styles/gloabl.css";
 import "../styles/custom.css";
 import "../styles/responsive.css";
 import 'react-toastify/dist/ReactToastify.css';
-
-
-
 
 NProgress.configure({ 
   minimum: 0.5 ,
   showSpinner: false
 
 });
-
 
 Router.onRouteChangeStart = url => {
   NProgress.start();
@@ -34,16 +30,23 @@ Router.onRouteChangeError = url => {
   NProgress.done();
 }
 
+
+
 function MyApp({ Component, pageProps }) {
 
-  return (
-           <Layout>
+  useEffect(() => {
+
+  
+
+  }, []);
+
+  return (<>
+           
               <div className="">
                       <Component {...pageProps} />
                </div>
                 <ToastContainer autoClose={2000}/>
-          </Layout>
-        );
+        </>);
 }
 
 export default MyApp;

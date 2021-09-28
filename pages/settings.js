@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link'
 import Head from 'next/head'
 import {useRouter} from 'next/router'
+import Layout from '../components/Admin/Layout';
 
 
 export default function Home({products}) {
@@ -23,10 +24,11 @@ export default function Home({products}) {
         <Head>
             <title>Settings</title>
         </Head>
+        <Layout>
         <div id="main-content" className="px-1 py-0 bg-white" >
         <div className="card card-custom gutter-b">
           <div className="px-1 py-6 card-body">
-            <form method="post" action="https://oratag.herokuapp.com/admin/oratags/settings/submit">
+            <form onSubmit={Handle} >
               <div className="container-fluid">
                 <div className="form-group row">
                   <label className="col-sm-2 col-form-label">OraBase ID</label>
@@ -113,6 +115,7 @@ export default function Home({products}) {
           </div>
         </div>
         </div>
+        </Layout>
     </>
   )
 }

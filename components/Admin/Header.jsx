@@ -2,6 +2,19 @@ import React from 'react'
 import Link from 'next/link'
 
 const Header = () => {
+
+    const ToggleSidebar = () => {
+      //alert('click');
+       let Sidebar = document.querySelectorAll('#sidebar')[0];
+      
+       if(Sidebar.classList[0] == 'active' ){
+        Sidebar.classList.remove("active");
+       }else{
+        Sidebar.classList.add("active");
+       }
+      //console.log(Sidebar.classList[0]);
+
+    }
   
     return (<>
 
@@ -12,7 +25,7 @@ const Header = () => {
    <header className="header mb-1">
        <nav className="navbar navbar-expand navbar-light ">
           <div className="container-fluid">
-            <a href="#" className="burger-btn d-block"><i className="bi bi-justify fs-3" /></a>
+            <a onClick={ToggleSidebar} className="burger-btn d-block"><i className="bi bi-justify fs-3" /></a>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon" /></button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">

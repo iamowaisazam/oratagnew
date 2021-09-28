@@ -10,7 +10,12 @@ const Sidebar = () => {
 //     toast.success("Successfully Subscribed");
 //  }
 
-return (
+return (<>
+
+      
+
+
+  
       <div id="sidebar" className="active">
       <div className="sidebar-wrapper active">
         <div className="sidebar-header">
@@ -36,7 +41,7 @@ return (
         <button className="sidebar-toggler btn x"><i data-feather="x" /></button>
       </div>
     </div>
-    )
+    </>)
 }
 
 export default Sidebar

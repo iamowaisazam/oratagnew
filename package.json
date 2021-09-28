@@ -11,16 +11,18 @@
     "export": "next build && next export"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "interweave": "^12.8.0",
     "mysql": "^2.18.1",
     "next": "10.0.6",
+    "next-connect": "^0.10.2",
     "nprogress": "^0.2.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-redux": "^7.2.2",
     "react-toastify": "^7.0.4",
     "redux": "^4.1.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "serverless-mysql": "^1.5.4"
   }
 }

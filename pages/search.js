@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link'
 import Head from 'next/head'
 import {useRouter} from 'next/router'
-import Footer from '../components/Footer'
+import Layout from '../components/Admin/Layout';
 
 export default function Home({products}) {
   
@@ -14,10 +14,8 @@ export default function Home({products}) {
   return (
     <>
       
-        <Head>
-            <title>Search OraTag</title>
-        </Head>
-
+        <Head> <title>Search OraTag</title> </Head>
+        <Layout>
           <div id="main-content">
             <div className="page-heading">
               <div className="page-title">
@@ -52,8 +50,9 @@ export default function Home({products}) {
                 </div>
               </section>
             </div>
-           <Footer />
+        
           </div>
+        </Layout>
       
     </>
   )

@@ -1,15 +1,25 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import Link from 'next/link'
 import Head from 'next/head'
 import {useRouter} from 'next/router'
+import Layout from '../components/Admin/Layout';
+import axios from 'axios';
 
 
 export default function Home({products}) {
-  
+   
    const router = useRouter();
    if(router.isFallback){
        return <div>Loading</div>
    }
+
+   useEffect( async () => {
+         
+    console.log(process.env.NEXT_PUBLIC_APP_NAME);
+
+
+
+   },[]);
 
    const Handle = (e) => {
 
@@ -23,6 +33,7 @@ export default function Home({products}) {
         <Head>
             <title>Assign OraTag</title>
         </Head>
+        <Layout>
         <div id="main-content" className="px-1 py-0 bg-white" >
           <div className="mb-0 card card-custom gutter-b">
           <div className="px-1 py-6 card-body">
@@ -132,6 +143,7 @@ export default function Home({products}) {
             </div>
           </div>
       </div>
+      </Layout>
     </>
   )
 }
