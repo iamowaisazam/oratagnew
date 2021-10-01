@@ -1,5 +1,4 @@
 // import mysql from 'mysql'
-
 // var db_config ={
 //   connectionLimit : 10,
 //   host:"207.174.215.159",
@@ -10,17 +9,12 @@
 // };
 
 // var db = mysql.createPool(db_config);
-
 // // con.connect(function(err) {
 // //   if (err) throw err;  
 // // });
-
-
 // export default db;
 
-
 import mysql from 'serverless-mysql'
-
 export const db = mysql({
   config: {
     host: "207.174.215.159",

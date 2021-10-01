@@ -1,41 +1,74 @@
-import React from 'react';
+import {Spinner } from 'react-bootstrap';
+import React,{useState,useEffect} from 'react';
+import {useDispatch} from 'react-redux';
 import Link from 'next/link'
 import Head from 'next/head'
 import {useRouter} from 'next/router'
-import Layout from '../components/Admin/Layout';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import Cookies from 'js-cookie'
+import {set_auth} from '../store/Action';
 
 export default function Home() {
+   
+    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
 
    const router = useRouter();
    if(router.isFallback){
        return <div>Loading</div>
    }
 
-   const handle = (e) => {
-      e.preventDefault();
 
+   useEffect(() => {
+
+
+  
+
+   },[]);
+
+
+   const handle = async (e) => {
+  
+        setLoading(true);
+
+        e.preventDefault();
         const auth = {
-          username:e.target.username.value,
-          password:e.target.password.value,
+             username:e.target.username.value,
+             password:e.target.password.value,
+         };
+
+         
+
+        try {
+         
+          let response = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+'/login',auth);
+          toast.success('You Are Logedin Now');
+          let token = response.data.token;
+          Cookies.set('auth',JSON.stringify(token));
+          dispatch(set_auth());
+           setLoading(false);
+        } catch (error) {
+
+          let errors = error.response.data.errors;
+           setLoading(false);
+           toast.error(errors != undefined ? errors : 'Invalid Password' );
         }
-
-      axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+'/login',auth)
-      .then(function (response) {
-
-        console.log(response);
-
-      }).catch(function (error) {
-
-        alert((error.response.data.errors));
-      });
       
    }
+
+
+  //  
+   
+ 
+
+
+
 
   return (
     <>
     <Head>
-        <title> OraTag - Login</title>
+        <title> {process.env.NEXT_PUBLIC_APP_NAME} - Login</title>
     </Head>
 
     <div id="auth">
@@ -43,7 +76,7 @@ export default function Home() {
        <div className="row h-100">
           <div className="col-12 col-md-8 m-auto py-5">
             <div className="text-center" >
-            <h1 className="auth-title py-2">Welcome to OraTag </h1>
+            <h1 className="auth-title py-2">Welcome to {process.env.NEXT_PUBLIC_APP_NAME} </h1>
             <form onSubmit={handle} >
                 <div className="form-group position-relative has-icon-left mb-4">
                   <input required type="text" name="username" className="form-control form-control-xl" placeholder="Username" />
@@ -55,7 +88,7 @@ export default function Home() {
                     <i className="bi bi-shield-lock" />
                   </div>
               </div>
-              <button type="submit" className="btn btn-primary btn-block btn-lg shadow-lg mt-3">Sign In</button>
+              {loading == true ?<Spinner size="md" animation="border" role="status"><span className="visually-hidden">Loading...</span></Spinner>:<button type="submit" className="btn btn-primary btn-block btn-lg shadow-lg mt-3">Sign In</button> }
             </form>   
          </div>
         </div>

@@ -2,9 +2,13 @@ import Header from './Header';
 import Sidebar from './Sidebar';
 
 
-export default function Layout(props) {
+export default function Layout({ title, children }) {
 
   return (<>
+
+      <Head>
+        <title>{title ? `${title} - ${process.env.NEXT_PUBLIC_APP_NAME}` :  `${process.env.NEXT_PUBLIC_APP_NAME}` }</title>
+      </Head>
 
      <style global  jsx>{`
 
@@ -50,7 +54,7 @@ export default function Layout(props) {
                 <Sidebar />
                <div id="main" className="layout-navbar">
                  <Header/>
-                 {props.children}
+                 {children}
               </div>
             </div>
          </>);

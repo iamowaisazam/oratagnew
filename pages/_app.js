@@ -1,5 +1,10 @@
 import { useEffect } from 'react';
 import Router  from "next/router";
+import store from '../store/index';
+import {Provider } from 'react-redux';
+
+
+
 
 import NProgress from 'nprogress';
 import { ToastContainer, toast } from 'react-toastify';
@@ -36,16 +41,17 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
 
-  
+     console.log(store.getState());
 
   }, []);
 
   return (<>
-           
+             <Provider store={store} >
               <div className="">
                       <Component {...pageProps} />
                </div>
                 <ToastContainer autoClose={2000}/>
+              </Provider>
         </>);
 }
 
