@@ -54,6 +54,11 @@ export default function Layout({ title, children, auth }) {
               cursor: pointer;
             }
 
+            .mainLoader{
+              display: block;
+              text-align: center;
+            }
+
       
         `}</style>
 

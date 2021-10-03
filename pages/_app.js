@@ -30,6 +30,7 @@ Router.onRouteChangeStart = url => {
 
 Router.onRouteChangeComplete = url => {
   NProgress.done();
+  console.log(Router.pathname);
 }
 
 Router.onRouteChangeError = url => {
