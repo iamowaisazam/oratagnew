@@ -1,11 +1,13 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
+import store from "../store";
 
-class MyDocument extends Document {
+export default class MyDocument extends Document {
 
-  static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(ctx);
-    return { ...initialProps };
-  }
+  // static async getInitialProps(ctx) {
+    
+  //   const initialProps = await Document.getInitialProps(ctx);
+  //   return { ...initialProps };
+  // }
 
   render() {
         return (
@@ -31,4 +33,14 @@ class MyDocument extends Document {
          }
 }
 
-export default MyDocument;
+
+MyDocument.getInitialProps = async (ctx) => {
+
+
+    const initialProps = await Document.getInitialProps(ctx);
+    
+   
+    return { ...initialProps};
+
+};
+

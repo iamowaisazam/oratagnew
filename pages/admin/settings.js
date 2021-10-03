@@ -1,11 +1,12 @@
 import React from 'react';
-import Link from 'next/link'
-import Head from 'next/head'
 import {useRouter} from 'next/router'
-import Layout from '../components/Admin/Layout';
+import Layout from '../../components/Admin/Layout';
+import { verify_token } from '../../utils/helper';
+import { parseCookies } from 'nookies';
 
 
-export default function Home({products}) {
+export default function Home(props) {
+  const {auth} = props;
   
    const router = useRouter();
    if(router.isFallback){
@@ -19,12 +20,7 @@ export default function Home({products}) {
 
    }
 
-  return (
-     <>
-        <Head>
-            <title>Settings</title>
-        </Head>
-        <Layout>
+  return (<Layout auth={auth}>
         <div id="main-content" className="px-1 py-0 bg-white" >
         <div className="card card-custom gutter-b">
           <div className="px-1 py-6 card-body">
@@ -114,20 +110,28 @@ export default function Home({products}) {
             </form>    
           </div>
         </div>
-        </div>
-        </Layout>
-    </>
-  )
+      </div>
+  </Layout>)
 }
 
-export async function getStaticProps(){
+export async function getServerSideProps(ctx) {
+  const {res} = ctx
+  const {auth} = parseCookies(ctx);
+  const token = await verify_token(auth);
 
-  const products = null;
+  if(token == false){
+   
+    res.writeHead(301,{Location:"/login"})
+    res.end();
+ }
 
-  return {
+
+
+const products = null;
+    return {
       props:{
           products,
+          auth:token
       }
-  }
-
+    }
 }

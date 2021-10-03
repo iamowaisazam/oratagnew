@@ -1,21 +1,20 @@
 import React from 'react';
 import Link from 'next/link'
-import Head from 'next/head'
 import {useRouter} from 'next/router'
-import Layout from '../components/Admin/Layout';
+import Layout from '../../../components/Admin/Layout';
+import { parseCookies } from 'nookies';
+import { verify_token } from '../../../utils/helper';
 
-export default function Home({products}) {
-  
+export default function Index(props) {
+   
+    const {auth} = props;
    const router = useRouter();
    if(router.isFallback){
        return <div>Loading</div>
    }
 
   return (
-    <>
-      
-        <Head> <title>Search OraTag</title> </Head>
-        <Layout>
+        <Layout auth={auth} title="Search" >
           <div id="main-content">
             <div className="page-heading">
               <div className="page-title">
@@ -36,37 +35,46 @@ export default function Home({products}) {
                 </div>
               </div>
               <section className="section">
-                <div className="card">
-                  <div className="card-header">
-                    <h4 className="card-title">Example Content</h4>
-                  </div>
-                  <div className="card-body">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur quas omnis
-                    laudantium tempore
-                    exercitationem, expedita aspernatur sed officia asperiores unde tempora maxime odio
-                    reprehenderit
-                    distinctio incidunt! Vel aspernatur dicta consequatur!
-                  </div>
-                </div>
+                    <div className="card">
+                        <div className="card-header">
+                            <h4 className="card-title">Example Content</h4>
+                        </div>
+                        <div className="card-body">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur quas omnis
+                            laudantium tempore
+                            exercitationem, expedita aspernatur sed officia asperiores unde tempora maxime odio
+                            reprehenderit
+                            distinctio incidunt! Vel aspernatur dicta consequatur!
+                        </div>
+                    </div>
               </section>
             </div>
         
           </div>
         </Layout>
-      
-    </>
   )
 
 }
 
 
-export async function getStaticProps(){
+export async function getServerSideProps(ctx) {
+  const {res} = ctx
+  const {auth} = parseCookies(ctx);
+  const token = await verify_token(auth);
 
-  const products = null;
-  return {
+  if(token == false){
+   
+    res.writeHead(301,{Location:"/login"})
+    res.end();
+ }
+
+
+
+const products = null;
+    return {
       props:{
           products,
+          auth:token
       }
-  }
-
+    }
 }

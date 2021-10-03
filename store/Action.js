@@ -3,28 +3,34 @@ import Cookies from 'js-cookie'
 
 
 export const  set_auth =  () => async (dispatch) => {
+    console.log('auth Trigger');
+    
+    
+     let token = Cookies.get('auth');
 
-     const token = JSON.parse(Cookies.get('auth'));
-
-     debugger
      if(token != undefined){
+        
 
-        try {
+        token = JSON.parse(token);
+        
+    
+            try {
 
-            let result = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+'/auth',{token});
-            dispatch({
-                type:'set_auth',
-                payload:result.data,
-            }); 
-           
-        } catch (error) {
-
+                let result = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+'/auth',{token});
                 dispatch({
-                        type:'set_auth',
-                        payload:null,
+                    type:'set_auth',
+                    payload:result.data,
                 }); 
+            
+            } catch (error) {
 
-        }
+                    dispatch({
+                            type:'set_auth',
+                            payload:null,
+                    }); 
+                    Cookies.remove('auth');
+            }
 
-     }
+        
+    }
 }

@@ -1,5 +1,5 @@
 import {query} from "../../utils/db";
-import jwt  from "jsonwebtoken";
+import { create_token } from "../../utils/helper";
 
 export default async function handler(req, res) {
 
@@ -11,12 +11,7 @@ export default async function handler(req, res) {
     }
 
     let user = results[0];
-    const token = jwt.sign({
-              id: user.id,
-              name: user.name,
-              password: user.password,
-             },process.env.JWT_SECRET,{expiresIn: '30d',});
-
-      return res.status(200).json({token})
+    const token = await create_token(user);
+    return res.status(200).json(token);
 
 }

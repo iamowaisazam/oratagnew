@@ -1,160 +1,119 @@
-import React,{useEffect} from 'react';
-import Link from 'next/link'
+import {parseCookies} from 'nookies'
+import {Spinner } from 'react-bootstrap';
+import React,{useState,useEffect} from 'react';
+import {useDispatch} from 'react-redux';
 import Head from 'next/head'
 import {useRouter} from 'next/router'
-import Layout from '../components/Admin/Layout';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import Cookies from 'js-cookie'
+import { verify_token } from '../utils/helper';
 
 
-export default function Home({products}) {
+
+export default function Home() {
    
+    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+
    const router = useRouter();
    if(router.isFallback){
        return <div>Loading</div>
    }
 
-   useEffect( async () => {
-         
-    console.log(process.env.NEXT_PUBLIC_APP_NAME);
+
+   useEffect(() => {
 
 
+  
 
    },[]);
 
-   const Handle = (e) => {
 
-     e.preventDefault();
-     alert('sibmit');
+   const handle = async (e) => {
+  
+        setLoading(true);
 
+        e.preventDefault();
+        const auth = {
+             username:e.target.username.value,
+             password:e.target.password.value,
+         };
+
+        
+        try {
+         
+          let response = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+'/login',auth);
+          toast.success('You Are Logedin Now');
+          let data = response.data;
+          Cookies.set('auth',JSON.stringify(data));
+          // dispatch(set_auth());
+
+           setLoading(false);
+           router.push('/admin/');
+        } catch (error) {
+
+          let errors = error.response.data.errors;
+           setLoading(false);
+           toast.error(errors != undefined ? errors : 'Invalid Password' );
+        }
+      
    }
 
-  return (
-     <>
-        <Head>
-            <title>Assign OraTag</title>
-        </Head>
-        <Layout>
-        <div id="main-content" className="px-1 py-0 bg-white" >
-          <div className="mb-0 card card-custom gutter-b">
-          <div className="px-1 py-6 card-body">
-              <form method="post" onSubmit={Handle} >
-                <div className="container-fluid">
-                  <div className="row">
-                    <div className="py-3 col-md-4">
-                      <label className="col-form-label">First Name</label>
-                      <input placeholder="Enter Your First Name" autoComplete="off" name="title_name" className="form-control" type="text" required />
-                    </div>
-                    <div className="py-3 col-md-4">
-                      <label className="col-form-label">Last Name</label>
-                      <input placeholder="Enter Your Last Name" autoComplete="off" name="last_name" className="form-control" type="text" />
-                    </div>
-                    <div className="py-3 col-md-4">
-                      <label className="col-form-label">Middle Name</label>
-                      <input placeholder="Enter Your Middle Name" autoComplete="off" name="middle_name" className="form-control" type="text" />
-                    </div>
-                    <div className="py-3 col-md-4">
-                      <label className="col-form-label">Cust #</label>
-                      <input placeholder="Enter Your Cust" autoComplete="off" name="cust" className="form-control" type="text" />
-                    </div>
-                    <div className="py-3 col-md-4">
-                      <label className="col-form-label">Order #</label>
-                      <input placeholder="Enter Your Order" autoComplete="off" name="order" className="form-control" type="text" />
-                    </div>
-                    <div className="py-3 col-md-4">
-                      <label className="col-form-label">Street</label>
-                      <input placeholder="Enter Your Street" autoComplete="off" name="street" className="form-control" type="text" />
-                    </div>
-                    <div className="py-3 col-md-4">
-                      <label className="col-form-label">City</label>
-                      <input placeholder="Enter Your City" autoComplete="off" name="city" className="form-control" type="text" />
-                    </div>
-                    <div className="py-3 col-md-4">
-                      <label className="col-form-label">State</label>
-                      <select name="state" id="select" className="form-control">
-                        <option value={0}>Please Select State</option>
-                        <option value="AL">Alabama</option>
-                        <option value="AK">Alaska</option>
-                        <option value="AZ">Arizona</option>
-                        <option value="AR">Arkansas</option>
-                        <option value="CA">California</option>
-                        <option value="CO">Colorado</option>
-                        <option value="CT">Connecticut</option>
-                        <option value="DE">Delaware</option>
-                        <option value="DC">District Of Columbia</option>
-                        <option value="FL">Florida</option>
-                        <option value="GA">Georgia</option>
-                        <option value="HI">Hawaii</option>
-                        <option value="ID">Idaho</option>
-                        <option value="IL">Illinois</option>
-                        <option value="IN">Indiana</option>
-                        <option value="IA">Iowa</option>
-                        <option value="KS">Kansas</option>
-                        <option value="KY">Kentucky</option>
-                        <option value="LA">Louisiana</option>
-                        <option value="ME">Maine</option>
-                        <option value="MD">Maryland</option>
-                        <option value="MA">Massachusetts</option>
-                        <option value="MI">Michigan</option>
-                        <option value="MN">Minnesota</option>
-                        <option value="MS">Mississippi</option>
-                        <option value="MO">Missouri</option>
-                        <option value="MT">Montana</option>
-                        <option value="NE">Nebraska</option>
-                        <option value="NV">Nevada</option>
-                        <option value="NH">New Hampshire</option>
-                        <option value="NJ">New Jersey</option>
-                        <option value="NM">New Mexico</option>
-                        <option value="NY">New York</option>
-                        <option value="NC">North Carolina</option>
-                        <option value="ND">North Dakota</option>
-                        <option value="OH">Ohio</option>
-                        <option value="OK">Oklahoma</option>
-                        <option value="OR">Oregon</option>
-                        <option value="PA">Pennsylvania</option>
-                        <option value="PR">Puerto Rico</option>
-                        <option value="RI">Rhode Island</option>
-                        <option value="SC">South Carolina</option>
-                        <option value="SD">South Dakota</option>
-                        <option value="TN">Tennessee</option>
-                        <option value="TX">Texas</option>
-                        <option value="UT">Utah</option>
-                        <option value="VT">Vermont</option>
-                        <option value="VA">Virginia</option>
-                        <option value="WA">Washington</option>
-                        <option value="WV">West Virginia</option>
-                        <option value="WI">Wisconsin</option>
-                        <option value="WY">Wyoming</option>
-                      </select>
-                    </div>
-                    <div className="py-3 col-md-4">
-                      <label className="col-form-label">Zip code</label>
-                      <input placeholder="Enter Your Zip Code" autoComplete="off" name="zip" className="form-control" type="text" />
-                    </div>
-                    <div className="py-3 col-md-4">
-                      <label className="col-form-label">DOB</label>
-                      <input placeholder="Enter Your DOB" autoComplete="off" name="dob" className="form-control" type="date" />
-                    </div>
-                    <div className="py-3 col-md-4 align-self-end ">
-                      <input type="submit" className="d-block form-control btn btn-danger" defaultValue="Submit" />
-                    </div>
+
+
+  return (<>
+    <Head>
+        <title> {process.env.NEXT_PUBLIC_APP_NAME} - Login</title>
+    </Head>
+
+    <div id="auth">
+       <div style={{'height':'100vh'}} className="container m-auto " >
+       <div className="row h-100">
+          <div className="col-12 col-md-8 m-auto py-5">
+            <div className="text-center" >
+            <h1 className="auth-title py-2">Welcome to {process.env.NEXT_PUBLIC_APP_NAME} </h1>
+            <form onSubmit={handle} >
+                <div className="form-group position-relative has-icon-left mb-4">
+                  <input required type="text" name="username" className="form-control form-control-xl" placeholder="Username" />
+                  <div className="form-control-icon"><i className="bi bi-person" /></div>
+                </div>
+              <div className="form-group position-relative has-icon-left mb-4">
+                <input required name="password" type="password" className="form-control form-control-xl" placeholder="Password" />
+                  <div className="form-control-icon">
+                    <i className="bi bi-shield-lock" />
                   </div>
-                </div>  
-              </form>    
-            </div>
-          </div>
+              </div>
+              {loading == true ?<Spinner size="md" animation="border" role="status"><span className="visually-hidden">Loading...</span></Spinner>:<button type="submit" className="btn btn-primary btn-block btn-lg shadow-lg mt-3">Sign In</button> }
+            </form>   
+         </div>
+        </div>
       </div>
-      </Layout>
-    </>
-  )
+    </div>    
+  </div>
+ </>)
+
 }
 
-export async function getStaticProps(){
+
+export async function getServerSideProps(ctx) {
+      const {res} = ctx
+      const {auth} = parseCookies(ctx);
+      const token = await verify_token(auth);
+
+      if(token != false){
+       
+        res.writeHead(301,{Location:"/admin/"})
+        res.end();
+     }
+
+  
 
   const products = null;
-
   return {
       props:{
           products,
+         
       }
   }
 
