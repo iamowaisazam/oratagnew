@@ -1,10 +1,10 @@
-import {query} from "../../utils/db";
+import {query} from "../../../utils/db";
 import paginate from "jw-paginate";
 
 
 export default async function handler(req, res) {
     
-    let sql = 'SELECT * FROM transactions where 1=1';
+    let sql = `SELECT * FROM transactions where user_id=${req.query.auth}`;
 
     if (req.query.status != undefined && req.query.status !== 'All') {
         sql += ' and status = "'+req.query.status+'" ';
@@ -27,7 +27,7 @@ export default async function handler(req, res) {
     }
 
 
-    const results = await query(sql);
+    const results = await query({queries: sql});
     const page = parseInt(req.query.page) || 1;
     const pageSize = 5;
     const pager = paginate(results.length, page, pageSize);

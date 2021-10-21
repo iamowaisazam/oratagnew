@@ -4,7 +4,7 @@ import { create_token } from "../../utils/helper";
 export default async function handler(req, res) {
 
     const {username,password} =  req.body;
-    const results = await query("SELECT * FROM users where name='"+username+"' AND password='"+password+"' ");
+    const results = await query({queries:"SELECT * FROM users where name='"+username+"' AND password='"+password+"' "});
 
     if(results.length === 0){
         return res.status(301).json({ errors: "Wrong Email Or Password"});

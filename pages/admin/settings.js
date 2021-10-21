@@ -121,7 +121,7 @@ export async function getServerSideProps(ctx) {
 
   if(token == false){
    
-    res.writeHead(301,{Location:"/login"})
+    res.writeHead(301,{Location:"/"})
     res.end();
  }
 

@@ -15,7 +15,7 @@ export default async function handler(req, res) {
         return res.status(301).json({ errors: "Expired Token"});
     }
   
-    const results = await query("SELECT * FROM users where id='"+id+"' ");
+    const results = await query({queries:"SELECT * FROM users where id='"+id+"' "});
     if(results.length === 0){
         return res.status(301).json({ errors: "User Not Found"});
     }

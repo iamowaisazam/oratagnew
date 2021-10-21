@@ -1,7 +1,6 @@
 import {parseCookies} from 'nookies'
 import {Spinner } from 'react-bootstrap';
-import React,{useState,useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import React,{useState} from 'react';
 import Head from 'next/head'
 import {useRouter} from 'next/router'
 import axios from 'axios';
@@ -10,44 +9,31 @@ import Cookies from 'js-cookie'
 import { verify_token } from '../utils/helper';
 
 
-
 export default function Home() {
    
-    const [loading, setLoading] = useState(false);
-    const dispatch = useDispatch();
-
+   const [loading, setLoading] = useState(false);
    const router = useRouter();
+
    if(router.isFallback){
        return <div>Loading</div>
    }
 
-
-   useEffect(() => {
-
-
-  
-
-   },[]);
-
-
    const handle = async (e) => {
   
         setLoading(true);
-
         e.preventDefault();
+
         const auth = {
              username:e.target.username.value,
              password:e.target.password.value,
-         };
+        };
 
-        
         try {
          
           let response = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+'/login',auth);
           toast.success('You Are Logedin Now');
           let data = response.data;
           Cookies.set('auth',JSON.stringify(data));
-          // dispatch(set_auth());
 
            setLoading(false);
            router.push('/admin/');

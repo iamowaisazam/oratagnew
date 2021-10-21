@@ -1,34 +1,55 @@
-import React,{useEffect} from 'react';
+import React,{useState} from 'react';
 import Link from 'next/link'
-import Head from 'next/head'
 import {useRouter} from 'next/router'
 import Layout from '../../components/Admin/Layout';
 import axios from 'axios';
 import { parseCookies } from 'nookies';
 import { verify_token } from '../../utils/helper';
+import { toast } from 'react-toastify';
 
 
 export default function Home(props) {
 
    const {auth} = props;
    const router = useRouter();
+   const [loading, setLoading] = useState(false);
+
    if(router.isFallback){
        return <div>Loading</div>
    }
 
-  //  if(!auth){
-  //    router.push('/');
-  //  }
 
-   useEffect( async () => {
-         
-      // console.log(auth);
-   },[]);
-
-   const Handle = (e) => {
+   const Handle = async  (e) => {
+      setLoading(true);
 
      e.preventDefault();
-     alert('sibmit');
+             
+       let data = {
+          first_name:e.target.first_name.value,
+          last_name:e.target.last_name.value,
+          middle_name:e.target.middle_name.value,
+          cust:e.target.cust.value,
+          order:e.target.order.value,
+          street:e.target.street.value,
+          city:e.target.city.value,
+          state:e.target.state.value,
+          zip:e.target.zip.value,
+          dob:e.target.dob.value,
+          user_id:auth.id
+       };
+
+       try {
+         
+        let response = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+'/products/add',data);
+        router.push('/admin/products/'+response.data);
+        setLoading(false);
+
+      } catch (error) {
+
+          let errors = error.response.data.errors;
+          toast.error(errors != undefined ? errors : 'Error' );
+          setLoading(false);
+      }
 
    }
 
@@ -36,36 +57,36 @@ export default function Home(props) {
             <div id="main-content" className="px-1 py-0 bg-white" >
               <div className="mb-0 card card-custom gutter-b">
               <div className="px-1 py-6 card-body">
-                  <form method="post" onSubmit={Handle} >
+                  <form className="add-product-form"  method="post" onSubmit={Handle} >
                     <div className="container-fluid">
                       <div className="row">
                         <div className="py-3 col-md-4">
                           <label className="col-form-label">First Name</label>
-                          <input placeholder="Enter Your First Name" autoComplete="off" name="title_name" className="form-control" type="text" required />
+                          <input placeholder="Enter Your First Name" name="first_name" className="form-control" type="text" required />
                         </div>
                         <div className="py-3 col-md-4">
                           <label className="col-form-label">Last Name</label>
-                          <input placeholder="Enter Your Last Name" autoComplete="off" name="last_name" className="form-control" type="text" />
+                          <input placeholder="Enter Your Last Name" name="last_name" className="form-control" type="text" />
                         </div>
                         <div className="py-3 col-md-4">
                           <label className="col-form-label">Middle Name</label>
-                          <input placeholder="Enter Your Middle Name" autoComplete="off" name="middle_name" className="form-control" type="text" />
+                          <input placeholder="Enter Your Middle Name" name="middle_name" className="form-control" type="text" />
                         </div>
                         <div className="py-3 col-md-4">
                           <label className="col-form-label">Cust #</label>
-                          <input placeholder="Enter Your Cust" autoComplete="off" name="cust" className="form-control" type="text" />
+                          <input placeholder="Enter Your Cust" name="cust" className="form-control" type="text" />
                         </div>
                         <div className="py-3 col-md-4">
                           <label className="col-form-label">Order #</label>
-                          <input placeholder="Enter Your Order" autoComplete="off" name="order" className="form-control" type="text" />
+                          <input placeholder="Enter Your Order" name="order" className="form-control" type="text" />
                         </div>
                         <div className="py-3 col-md-4">
                           <label className="col-form-label">Street</label>
-                          <input placeholder="Enter Your Street" autoComplete="off" name="street" className="form-control" type="text" />
+                          <input placeholder="Enter Your Street" name="street" className="form-control" type="text" />
                         </div>
                         <div className="py-3 col-md-4">
                           <label className="col-form-label">City</label>
-                          <input placeholder="Enter Your City" autoComplete="off" name="city" className="form-control" type="text" />
+                          <input placeholder="Enter Your City" name="city" className="form-control" type="text" />
                         </div>
                         <div className="py-3 col-md-4">
                           <label className="col-form-label">State</label>
@@ -127,11 +148,11 @@ export default function Home(props) {
                         </div>
                         <div className="py-3 col-md-4">
                           <label className="col-form-label">Zip code</label>
-                          <input placeholder="Enter Your Zip Code" autoComplete="off" name="zip" className="form-control" type="text" />
+                          <input placeholder="Enter Your Zip Code" name="zip" className="form-control" type="text" />
                         </div>
                         <div className="py-3 col-md-4">
                           <label className="col-form-label">DOB</label>
-                          <input placeholder="Enter Your DOB" autoComplete="off" name="dob" className="form-control" type="date" />
+                          <input placeholder="Enter Your DOB" name="dob" className="form-control" type="date" />
                         </div>
                         <div className="py-3 col-md-4 align-self-end ">
                           <input type="submit" className="d-block form-control btn btn-danger" defaultValue="Submit" />

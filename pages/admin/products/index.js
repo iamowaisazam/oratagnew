@@ -40,7 +40,8 @@ export default function Index(props) {
             let response = await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+'/products',{params:{
               search:search.value,
               status:status.value,
-              page:oldpage
+              page:oldpage,
+              auth:auth.id
             }});
 
             console.log(response.data);
@@ -134,7 +135,7 @@ export default function Index(props) {
                                     <td className="detailrow " > {item.status  } </td>
                                     <td className="detailrow " > {item.oratag  } </td>
                                     <td className="detailrow " > {item.activate_status  } </td>
-                                    <td className=" "><input className="form-control" type="checkbox" /></td>      
+                                    <td className=" "> <Link href={`products/view/${item.id}`} ><a><input className="form-control" type="checkbox" /></a></Link></td>      
                                 </tr>
                               })
                         : '' 
@@ -178,7 +179,7 @@ export async function getServerSideProps(ctx) {
 
   if(token == false){
    
-    res.writeHead(301,{Location:"/login"})
+    res.writeHead(301,{Location:"/"})
     res.end();
  }
 

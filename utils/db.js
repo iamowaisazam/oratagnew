@@ -25,9 +25,11 @@ export const db = mysql({
   },
 })
 
-export async function query(q) {
+export async function query({queries,values}) {
   try {
-    const results = await db.query(q)
+
+   
+    const results = await db.query(queries,values)
     await db.end()
     return results
   } catch (e) {
