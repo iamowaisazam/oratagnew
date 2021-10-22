@@ -64,11 +64,9 @@ export default function Index(props) {
         <div id="main-content">
           <div className="mb-0 card card-custom gutter-b">
               <div className="px-2 py-6 card-body">
-
               <div className="px-2 container-fluid">
                <div className="row">
                 <div className="col-12">
-              
                 <div className="p-6">
                     <div className="row">
                       <div className="col-md-5 py-2 ">
@@ -96,31 +94,24 @@ export default function Index(props) {
                 { loading == true ? <div className="pt-5 mainLoader" > <Spinner style={{ width: '5rem', height: '5rem' }} size="md" animation="border" role="status"><span className="visually-hidden">Loading...</span></Spinner> </div>  : <table className="table table-checkable" id="my_datatable">
                       <thead>
                         <tr>
-                            <th className>#</th>
-                            <th className>First <br /> Name</th>
-                            <th className>Middle</th>
-                            <th className>Last <br /> Name</th>
-                            <th className>Street</th>
-                            <th className>City</th>
-                            <th className>State</th>
-                            <th className>Zip</th>
-                            <th className>Cust#</th>
-                            <th className>Date <br /> &amp;  Time</th>
-                            <th className>transactions <br /> Status</th>
-                            <th className>OraTag#</th>
-                            <th className>Activate <br /> Status</th>
-                            <th className>Select</th>
+                            <th>#</th>
+                            <th>First <br /> Name</th>
+                            <th>Middle</th>
+                            <th>Last <br /> Name</th>
+                            <th>Street</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Zip</th>
+                            <th>Cust#</th>
+                            <th>Date <br /> &amp;  Time</th>
+                            <th>transactions <br /> Status</th>
+                            <th>OraTag#</th>
+                            <th>Activate <br /> Status</th>
+                            <th>Select</th>
                         </tr>
-                        
                       </thead>
-                      <tbody style={{"word-break": "break-word"}} >
-                     
-
-                      
-                      { 
-                        
-                        renData != false ? renData.data.map((item,i,arr) => {
-
+                      <tbody style={{"wordBreak": "break-word"}} >
+                      { renData != false ? renData.data.map((item,i,arr) => {
                         return <tr key={i} className="odd gradeX" >
                                     <td style={{"width":"40px"}} className="detailrow " >{item.id} </td>
                                     <td style={{"width":"100px"}} className="detailrow " > {item.first_name  } </td>
@@ -135,18 +126,11 @@ export default function Index(props) {
                                     <td className="detailrow " > {item.status  } </td>
                                     <td className="detailrow " > {item.oratag  } </td>
                                     <td className="detailrow " > {item.activate_status  } </td>
-                                    <td className=" "> <Link href={`products/view/${item.id}`} ><a><input className="form-control" type="checkbox" /></a></Link></td>      
+                                    <td > <Link href={`products/view/${item.id}`} ><a><input className="form-control" type="checkbox" /></a></Link></td>      
                                 </tr>
                               })
                         : '' 
-                        }
-
-                      
-
-                        
-                      </tbody>
-                    </table>
-                    }
+                        }</tbody></table>}
                   </div>
                  </div>
                </div>
