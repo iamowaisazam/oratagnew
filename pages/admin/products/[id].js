@@ -28,14 +28,12 @@ export default function Index(props) {
   
 
   useEffect( async () => {
-
         let asd = await getItems();
         if(ev == 0){   
-        
-           document.addEventListener('keydown', handleKeyDown);
+           document.addEventListener('keydown', handleKeyDown);           
            setEv(1);
+           document.querySelectorAll('.add-icon')[0].click();
         }
-       
         // return function cleanup() {
         //   document.removeEventListener('keydown', handleKeyDown);
         // }
@@ -44,18 +42,15 @@ export default function Index(props) {
 
 
   const handleKeyDown = async (e) => {
-        if(e.key == "Enter" || e.key == "ArrowDown" ){
-         
         
+    if(e.key == "Enter" || e.key == "ArrowDown" ){
+         
          let li = document.querySelectorAll('.add-icon')[0].click();
 
         //console.log(document.getEventListeners());
         //console.table(listAllEventListeners());
-
         // console.log(li.keydown());
-
-        }
-
+      }
   }
   
   const [value, setValue] = useState({});
@@ -123,42 +118,38 @@ export default function Index(props) {
 
 
 
-  const del = async (id) => {
-      
-        let sendData = [];
-        state.items.forEach(function(element,key) { 
-          if(element.id != id){
-            sendData.push({
-                bar_code: element.bar_code,
-                description: element.description,
-                id: element.id
-            }); 
-          }
-         });
+const del = async (id) => {    
+  let sendData = [];
+  state.items.forEach(function(element,key) { 
+        if(element.id != id){
+          sendData.push({
+              bar_code: element.bar_code,
+              description: element.description,
+              id: element.id
+          }); 
+        }
+    });
 
-        let additem = sendData;
-        let olditems = {...state,items:additem};
-        let step = await setState(olditems);
-  } 
+  let additem = sendData;
+  let olditems = {...state,items:additem};
+  let step = await setState(olditems);
+} 
 
 
-  const barcodechangehandle = (e) => {
+const barcodechangehandle = (e) => {
     let name = e.target.name;
     let val = e.target.value;
     setValue({[name]:val})   
- }
+}
 
- const deschangehandle = (e) => {
-
+const deschangehandle = (e) => {
    let name = e.target.name;
    let val = e.target.value;
    setDes({[name]:val})   
 }
 
-
-
-  const handle = async (e) => {
-    setLoading(true);
+const handle = async (e) => {
+    // setLoading(true);
       
       let sendData = [];
       state.items.forEach(element => {
@@ -173,14 +164,18 @@ export default function Index(props) {
       
       });
 
+      debugger
+
       try {  
 
           let response = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+'/items/add',{
             id:product.id,
             data:sendData
           });
+
           setLoading(false);
-          getItems();
+          // getItems();
+          router.push('/admin/products/view/'+response.data);
         
       } catch (error) {
 
@@ -189,8 +184,7 @@ export default function Index(props) {
           setLoading(false);
       }
 
-    console.log(sendData);
-  
+
   }
 
 
@@ -205,7 +199,7 @@ export default function Index(props) {
                       <div className="container-fluid">
                         <div className="row">
                           <div className="py-3 col-md-3">
-                            <label className="col-form-label">{ev} First Name</label>
+                            <label className="col-form-label">First Name</label>
                             <input readOnly placeholder="Enter Your First Name"  className="form-control" type="text" defaultValue={product.first_name} required />
                           </div>
                           <div className="py-3 col-md-3">
@@ -255,7 +249,7 @@ export default function Index(props) {
                                     <label className="col-form-label">Transaction#</label>
                             </div>
                             <div className="py-3 col-md-10 align-self-end ">
-                                <input defaultValue={product.transaction_id} disabled className="form-control" type="text" />
+                                <input defaultValue={'#'+product.transaction_id} disabled className="form-control" type="text" />
                             </div>
                         </div>
                         
@@ -276,11 +270,11 @@ export default function Index(props) {
 
                           {
                             Loading == true ? 
-                            <div className="row" > <div className="col-12 text-center py-5 " > <Spinner style={{ width: '5rem', height: '5rem' }} size="md" animation="border" role="status"  /> </div> </div>  :
+                            <div className="row" > <div className="col-12 text-center py-1 " > <Spinner style={{ width: '5rem', height: '5rem' }} size="md" animation="border" role="status"  /> </div> </div>  :
 
                               state.items.length > 0  ? state.items.map((item,i,arr) => {
 
-                                 return <div key={i}  className={`my-5 row`}>
+                                 return <div key={i}  className={`my-1 row`}>
                                            <div className=" align-self-center col-md-1 text-center text-sm-left">
                                                 <label className="d-block col-form-label">{i + 1 }</label>
                                            </div>
@@ -308,14 +302,14 @@ export default function Index(props) {
                           </div>
                           <div className="py-3 col-md-4 align-self-end ">
                               <label className="py-2" >Assign Status</label>
-                              <input readOnly className="form-control" type="text" value="Pending" />
+                              <input readOnly className="form-control" type="text" value={product.status} />
                           </div>
                           <div className="py-3 col-md-4 align-self-end ">
                               <label className="py-2" >OraTag#</label>
-                              <input readOnly className="form-control" type="text" value="Pending" />
+                              <input readOnly className="form-control" type="text" value={product.oratag} />
                           </div>
                           <div className="py-3 col-md-2 align-self-end ">
-                              <input onClick={handle} className="btn btn-success form-control" type="button" value="Submit" />
+                              <input onClick={handle} className="btn btn-success form-control" type="button" value="Assign" />
                           </div>
                       </div>
                     </div>

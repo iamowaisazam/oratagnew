@@ -5,7 +5,7 @@ export default async function handler(req, res) {
       
     const {first_name,last_name,middle_name,cust,orders,street,city,state,zip_code,dob,user_id} = req.body;
 
-    let transaction_id = Math.floor(Math.random() * 1000);
+    let transaction_id = Math.floor(Math.random() * 10000000);
 
         try {
             

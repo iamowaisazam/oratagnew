@@ -2,12 +2,17 @@ import {query} from "../../../utils/db";
 
 export default async function handler(req, res) {
 
-
     const items = req.body.data;
     const id = req.body.id;
+    let oratag = Math.floor(Math.random() * 10000000);
 
-    let sql = `DELETE FROM items WHERE transaction_id=${id}`; 
-    const result = await query({queries: sql});
+    let sql1 = `UPDATE transactions SET status='Assigned', oratag='${oratag}' WHERE id='${id}'`; 
+     await query({queries: sql1});
+
+ 
+
+   let sql = `DELETE FROM items WHERE transaction_id=${id}`; 
+    await query({queries: sql});
     
     items.forEach( async element => {
             
@@ -19,7 +24,5 @@ export default async function handler(req, res) {
 
     });
   
-    let results = null;
-
-    return res.status(200).json(results);
+    return res.status(200).json(id);
 }

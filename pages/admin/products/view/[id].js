@@ -28,24 +28,17 @@ export default function Index(props) {
   useEffect( async () => {
 
         let asd = await getItems();
-       
   },[]);
-
-
-  
-  const [value, setValue] = useState({});
-  const [mdes, setDes] = useState({});
-
-  
 
   const getItems = async () => {
 
         setLoading(true);
+
         let response = await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+'/items',{params:{id:product.id}});
-        
         let olditems = [];
         let setinputs = {};
         let olddes = {};
+        
         await response.data.forEach( async function(element,key) { 
            let un = await Math.floor(Math.random() * 1000);
          
@@ -54,15 +47,10 @@ export default function Index(props) {
                 description: element.description,
                 id: un
             }); 
-
           
             setinputs[un] = element.bar_code;
             olddes[un] = element.description;
         });
-
-        
-       await setValue(setinputs);
-       await setDes(olddes);
 
         let sendata = {
                        ...state,
@@ -71,68 +59,7 @@ export default function Index(props) {
        
          await setState(sendata);
         setLoading(false);
-
-        // document.addEventListener('keydown', handleKeyDown);
-            
-      
   } 
-
-
-
-
-  const barcodechangehandle = (e) => {
-    let name = e.target.name;
-    let val = e.target.value;
-    setValue({[name]:val})   
- }
-
- const deschangehandle = (e) => {
-
-   let name = e.target.name;
-   let val = e.target.value;
-   setDes({[name]:val})   
-}
-
-
-
-  const handle = async (e) => {
-    setLoading(true);
-      
-      let sendData = [];
-      state.items.forEach(element => {
-      let barcode = document.querySelectorAll(`.barcode${element.id}`)[0].value;
-      let des = document.querySelectorAll(`.des${element.id}`)[0].value;
-
-          sendData.push({
-            bar_code:barcode,
-            des:des,
-            transaction_id:product.id
-          });
-      
-      });
-
-      try {  
-
-          let response = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+'/items/add',{
-            id:product.id,
-            data:sendData
-          });
-          setLoading(false);
-          getItems();
-        
-      } catch (error) {
-
-          let errors = error.response.data.errors;
-          toast.error(errors != undefined ? errors : 'Found Error Contact To Developer' );
-          setLoading(false);
-      }
-
-    console.log(sendData);
-  
-  }
-
-
-
 
 
   return (
@@ -143,7 +70,7 @@ export default function Index(props) {
                       <div className="container-fluid">
                         <div className="row">
                           <div className="py-3 col-md-3">
-                            <label className="col-form-label">{ev} First Name</label>
+                            <label className="col-form-label">First Name</label>
                             <input readOnly placeholder="Enter Your First Name"  className="form-control" type="text" defaultValue={product.first_name} required />
                           </div>
                           <div className="py-3 col-md-3">
@@ -186,8 +113,6 @@ export default function Index(props) {
                       </div> 
 
                     <div className="container-fluid" >
-                    <form  className="itemform"   >
-                      
                       <div style={{'borderTop': '1px solid #C8CED3','borderBottom': '1px solid #C8CED3'}} className="row my-2 py-1 ">  
                             <div className="py-3 col-md-2 align-self-end "><label className="col-form-label">Transaction#</label></div>
                             <div className="py-3 col-md-10 align-self-end ">
@@ -214,22 +139,40 @@ export default function Index(props) {
 
                               state.items.length > 0  ? state.items.map((item,i,arr) => {
 
-                                 return <div key={i}  className={`my-5 row`}>
+                                 return <div key={i}  className={`my-1 row`}>
                                            <div className=" align-self-center col-md-1 text-center text-sm-left">
                                                 <label className="d-block col-form-label">{i + 1 }</label>
                                            </div>
                                            <div className="my-2 col-md-6">
-                                              <input readOnly name={`${item.id}`} value={ value[item.id]} 
-                                                onChange={barcodechangehandle}   className={`barcode${item.id} form-control`} type="text" />
+                                              <input readOnly value={item.bar_code} className={`form-control`} type="text" />
                                            </div>
                                            <div className="my-2 col-md-5">
-                                                <input readOnly onChange={deschangehandle}  name={`${item.id}`} value={mdes[item.id]} className={`des${item.id} form-control`} type="text" />
+                                              <input readOnly value={item.description} className={`form-control`} type="text" />
                                            </div>
                                       </div> 
                                     })
                                 : '' 
                             } 
-                        </form>
+                        
+                        <div className="bottom-area container-fluid">
+                      <div className=" row my-2 py-1 ">  
+                          <div className="py-3 col-md-2 text-center text-sm-left align-self-end ">
+                        
+                          </div>
+                          <div className="py-3 col-md-4 align-self-end ">
+                              <label className="py-2" >Assign Status</label>
+                              <input readOnly className="form-control" type="text" value={product.status} />
+                          </div>
+                          <div className="py-3 col-md-4 align-self-end ">
+                              <label className="py-2" >OraTag#</label>
+                              <input readOnly className="form-control" type="text" value={product.oratag} />
+                          </div>
+                          <div className="py-3 col-md-2 align-self-end ">
+                             <Link href="/admin" ><a className="btn btn-success form-control" >Finish</a></Link>
+                          </div>
+                      </div>
+                    </div>
+
                     </div>
                   </div>
                 </div>

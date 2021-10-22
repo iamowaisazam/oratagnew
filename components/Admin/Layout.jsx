@@ -33,7 +33,7 @@ export default function Layout({ title, children, auth }) {
             }
 
             #main {
-              margin-left: 245px;
+              margin-left: 0px;
             }
 
             .sidebar-wrapper {

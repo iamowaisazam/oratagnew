@@ -11,6 +11,19 @@ const Sidebar = () => {
 //     toast.success("Successfully Subscribed");
 //  }
 
+    const ToggleSidebar = () => {
+      //alert('click');
+      let Sidebar = document.querySelectorAll('#sidebar')[0];
+      
+      if(Sidebar.classList[0] == 'active' ){
+        Sidebar.classList.remove("active");
+      }else{
+        Sidebar.classList.add("active");
+      }
+      //console.log(Sidebar.classList[0]);
+
+    }
+
 const logout = () => {
 
     Cookies.remove('auth')
@@ -19,14 +32,16 @@ const logout = () => {
 }
 
 return (<>
-      <div id="sidebar" className="active">
-        <div className="sidebar-wrapper active">
+      <div id="sidebar" className="">
+        <div className="sidebar-wrapper ">
           <div className="sidebar-header bg-success  ">
             <div className="d-flex justify-content-between">
-              <div className="logo"><Link href="/"><a><img src="/assets/images/logo/logo.png"  /></a></Link></div>
-              <div className="toggler">
-                <a href="#" className="sidebar-hide d-xl-none d-block"><i className="bi bi-x bi-middle" /></a>
+              <div className="logo"><Link href="/"><a className="text-white" >Oratag</a></Link>
+              <a onClick={ToggleSidebar} className=""><i className="px-3 text-dark fas fa-times-circle fs-3" /></a>
               </div>
+              {/* <div className="toggler">
+                <a href="#" className="sidebar-hide d-xl-none d-block"><i className="bi bi-x bi-middle" /></a>
+              </div> */}
             </div>
           </div>
           <div className="sidebar-menu">
