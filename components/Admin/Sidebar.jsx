@@ -1,9 +1,12 @@
 import React from 'react'
 import Link from 'next/link';
-import router from 'next/router';
+import router,{useRouter} from 'next/router';
 import Cookies from 'js-cookie';
 
 const Sidebar = () => {
+
+  const routers = useRouter();
+
 
 //   const submit = (e) => {
 //     e.preventDefault();
@@ -46,11 +49,11 @@ return (<>
           </div>
           <div className="sidebar-menu">
             <ul className="menu">
-              <li className={`sidebar-item  ${ '' == "/admin" ? "active" : ""} `}><Link href="/admin/"><a className="sidebar-link" ><i className="fas fa-plus"></i><span>Assign Oratag</span></a></Link></li>
+              <li className={`sidebar-item  ${ routers.pathname  == "/admin" ? "active" : ""} `}><Link href="/admin/"><a className="sidebar-link" ><i className="fas fa-plus"></i><span>Assign Oratag</span></a></Link></li>
 
-              <li className={`sidebar-item  ${ '' == "/admin/products" ? "active" : ""} `}><Link href="/admin/products"><a className="sidebar-link"><i className="fas fa-search-plus"></i><span>Search OraTag</span></a></Link></li>
+              <li className={`sidebar-item  ${ routers.pathname == "/admin/products" ? "active" : ""} `}><Link href="/admin/products"><a className="sidebar-link"><i className="fas fa-search-plus"></i><span>Search OraTag</span></a></Link></li>
 
-              <li className={`sidebar-item  ${ '' == "/admin/settings" ? "active" : ""} `}><Link href="/admin/settings"><a className="sidebar-link"><i className="fas fa-cogs"></i><span>Settings</span></a></Link></li>
+              <li className={`sidebar-item  ${ routers.pathname == "/admin/settings" ? "active" : ""} `}><Link href="/admin/settings"><a className="sidebar-link"><i className="fas fa-cogs"></i><span>Settings</span></a></Link></li>
 
               <li  className="sidebar-item"><a  onClick={logout}  className="sidebar-link button-link"><i className="fas fa-sign-out-alt"></i><span>Logout</span></a></li>
             </ul>
