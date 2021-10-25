@@ -65,6 +65,12 @@ export default function Layout({ title, children, auth }) {
             height: 37px;
            }
 
+           .custom-label{
+            text-align: left;
+            font-weight: bold;
+            padding: 9px 0px;
+           }
+
         `}
         
         </style>

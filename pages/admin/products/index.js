@@ -229,9 +229,9 @@ export default function Index(props) {
 
             <div style={{marginTop: '52px'}} className="text-center container ">
                 <div className="row" > 
-                  <div className="col-md-2" > <button onClick={handle_cancel} className="btn btn-danger" >Cancel</button> </div>
-                  <div className="col-md-8" > <input readOnly type="text" value="" className="w-100 form-control" placeholder="Activate Oratags"  /> </div>
-                  <div className="col-md-2" ><button onClick={activate}  className="btn btn-success" >Activate Oratags</button>  </div>
+                  <div className=" text-right col-md-2 align-self-end " > <button onClick={handle_cancel} className="d-block btn btn-danger" >Cancel</button> </div>
+                  <div className="col-md-8 text-left " > <label className=" custom-label text-left d-block font-weight-bold" > Retrieve Status </label><input readOnly type="text" value="" className="w-100 form-control" placeholder="Activate Oratags"  /> </div>
+                  <div className="col-md-2 align-self-end " ><button onClick={activate}  className="d-block btn btn-success" >Activate Oratags</button>  </div>
                 </div>
             </div>
           </div>
