@@ -125,6 +125,13 @@ export default function Index(props) {
    }
 
 
+   const view = (id) => {
+
+      router.push('/admin/products/view/'+id);
+   
+   };
+
+
 
   return (
       <Layout auth={auth} title="Search" >
@@ -181,20 +188,20 @@ export default function Index(props) {
                       <tbody style={{"wordBreak": "break-word"}} >
                       { renData != false ? renData.data.map((item,i,arr) => {
                            
-                       return <tr key={i} className="odd gradeX" >
-                                    <td style={{"width":"40px"}} className="detailrow " >{item.id} </td>
-                                    <td style={{"width":"100px"}} className="detailrow " > {item.first_name  } </td>
-                                    <td style={{"width":"100px"}}  className="detailrow " > {item.last_name } </td>
-                                    <td style={{"width":"100px"}} className="detailrow " > {item.middle_name  } </td>
-                                    <td className="detailrow " > {item.street  } </td>
-                                    <td className="detailrow " > {item.city  } </td>
-                                    <td className="detailrow " > {item.state  } </td>
-                                    <td className="detailrow " > {item.zip_code  } </td>
-                                    <td className="detailrow " > {item.cust  } </td>
-                                    <td className="detailrow " > {item.date  } </td>
-                                    <td className="detailrow " > {item.status  } </td>
-                                    <td className="detailrow " > {item.oratag  } </td>
-                                    <td className="detailrow " > {item.activate_status  } </td>
+                       return <tr  key={i} className="odd gradeX" >
+                                    <td onClick={() => view(item.id)} style={{"width":"40px"}} className="detailrow " > {item.id} </td>
+                                    <td onClick={() => view(item.id)} style={{"width":"100px"}} className="detailrow " > {item.first_name  } </td>
+                                    <td onClick={() => view(item.id)} style={{"width":"100px"}}  className="detailrow " > {item.last_name } </td>
+                                    <td onClick={() => view(item.id)} style={{"width":"100px"}} className="detailrow " > {item.middle_name  } </td>
+                                    <td onClick={() => view(item.id)} className="detailrow " > {item.street  } </td>
+                                    <td onClick={() => view(item.id)} className="detailrow " > {item.city  } </td>
+                                    <td onClick={() => view(item.id)} className="detailrow " > {item.state  } </td>
+                                    <td onClick={() => view(item.id)} className="detailrow " > {item.zip_code  } </td>
+                                    <td onClick={() => view(item.id)} className="detailrow " > {item.cust  } </td>
+                                    <td onClick={() => view(item.id)} className="detailrow " > {item.date  } </td>
+                                    <td onClick={() => view(item.id)} className="detailrow " > {item.status  } </td>
+                                    <td onClick={() => view(item.id)} className="detailrow " > {item.oratag  } </td>
+                                    <td onClick={() => view(item.id)} className="detailrow " > {item.activate_status  } </td>
                                     <td> <input className="mybox" type="checkbox" name={item.id} data-id={item.id} /> </td>      
                                 </tr>
                               })
