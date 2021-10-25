@@ -34,7 +34,6 @@ export default function Index(props) {
      let search = document.querySelectorAll('.mysearch')[0];
      let status = document.querySelectorAll('.mystatus')[0];
 
-
           try {
                 
             let response = await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+'/products',{params:{
@@ -44,7 +43,6 @@ export default function Index(props) {
               auth:auth.id
             }});
 
-            console.log(response.data);
             setrenData(response.data);
             setLoading(false);
             
@@ -58,6 +56,22 @@ export default function Index(props) {
           }
 
     };
+
+
+    const deschangehandle = async (e) => {
+
+      try {        
+        let response = await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+'/products/status',{params:{
+          status:e.target.checked,
+          id:e.target.name
+        }});
+
+      } catch (error) {
+        let errors = error.response.data.errors;
+        toast.error(errors != undefined ? errors : 'Found Error Contact To Developer' );
+      }
+
+   }
 
   return (
       <Layout auth={auth} title="Search" >
@@ -107,12 +121,13 @@ export default function Index(props) {
                             <th>transactions <br /> Status</th>
                             <th>OraTag#</th>
                             <th>Activate <br /> Status</th>
-                            <th>Select</th>
                         </tr>
                       </thead>
+                     
                       <tbody style={{"wordBreak": "break-word"}} >
                       { renData != false ? renData.data.map((item,i,arr) => {
-                        return <tr key={i} className="odd gradeX" >
+                           
+                       return <tr key={i} className="odd gradeX" >
                                     <td style={{"width":"40px"}} className="detailrow " >{item.id} </td>
                                     <td style={{"width":"100px"}} className="detailrow " > {item.first_name  } </td>
                                     <td style={{"width":"100px"}}  className="detailrow " > {item.last_name } </td>
@@ -125,8 +140,8 @@ export default function Index(props) {
                                     <td className="detailrow " > {item.date  } </td>
                                     <td className="detailrow " > {item.status  } </td>
                                     <td className="detailrow " > {item.oratag  } </td>
-                                    <td className="detailrow " > {item.activate_status  } </td>
-                                    <td > <Link href={`products/view/${item.id}`} ><a><input className="form-control" type="checkbox" /></a></Link></td>      
+                                    <td> <input defaultChecked={item.activate_status == 'false' ? false : true } type="checkbox" name={item.id}   
+                                    onChange={deschangehandle} /> </td>      
                                 </tr>
                               })
                         : '' 

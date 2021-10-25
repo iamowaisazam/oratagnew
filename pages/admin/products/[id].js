@@ -164,8 +164,6 @@ const handle = async (e) => {
       
       });
 
-      debugger
-
       try {  
 
           let response = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+'/items/add',{
