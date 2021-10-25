@@ -58,20 +58,73 @@ export default function Index(props) {
     };
 
 
-    const deschangehandle = async (e) => {
+  //   const deschangehandle = async (e) => {
 
-      try {        
-        let response = await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+'/products/status',{params:{
-          status:e.target.checked,
-          id:e.target.name
-        }});
+  //     try {        
+  //       let response = await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL+'/products/status',{params:{
+  //         status:e.target.checked,
+  //         id:e.target.name
+  //       }});
 
-      } catch (error) {
-        let errors = error.response.data.errors;
-        toast.error(errors != undefined ? errors : 'Found Error Contact To Developer' );
-      }
+  //     } catch (error) {
+  //       let errors = error.response.data.errors;
+  //       toast.error(errors != undefined ? errors : 'Found Error Contact To Developer' );
+  //     }
+
+  //  }
+
+
+   const handle_cancel = () => {
+
+     let box = document.querySelectorAll('.mybox');
+     if(box[0]){
+        box.forEach((element) => {
+          element.checked = false;
+        })
+     }
 
    }
+
+
+
+   const activate = async () => {
+
+       setLoading(true);
+
+        let ids = [];
+        let box = document.querySelectorAll('.mybox');
+        if(box[0]){
+          box.forEach((element) => {
+            if(element.checked == true ){
+                ids.push(element.getAttribute('data-id'));
+              }
+          })
+        }
+
+
+        try {        
+               let response = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL+'/products/status',{id:ids});
+                console.log(response);
+                sendData(page);
+        
+        } catch (error) {
+            let errors = error.response.data.errors;
+            toast.error(errors != undefined ? errors : 'Found Error Contact To Developer' );
+            setLoading(false);
+        }
+
+    
+
+
+
+
+
+
+
+
+   }
+
+
 
   return (
       <Layout auth={auth} title="Search" >
@@ -121,6 +174,7 @@ export default function Index(props) {
                             <th>transactions <br /> Status</th>
                             <th>OraTag#</th>
                             <th>Activate <br /> Status</th>
+                            <th>Action</th>
                         </tr>
                       </thead>
                      
@@ -140,8 +194,8 @@ export default function Index(props) {
                                     <td className="detailrow " > {item.date  } </td>
                                     <td className="detailrow " > {item.status  } </td>
                                     <td className="detailrow " > {item.oratag  } </td>
-                                    <td> <input defaultChecked={item.activate_status == 'false' ? false : true } type="checkbox" name={item.id}   
-                                    onChange={deschangehandle} /> </td>      
+                                    <td className="detailrow " > {item.activate_status  } </td>
+                                    <td> <input className="mybox" type="checkbox" name={item.id} data-id={item.id} /> </td>      
                                 </tr>
                               })
                         : '' 
@@ -152,7 +206,7 @@ export default function Index(props) {
              </div>
              <div style={{marginTop: '52px'}} className="text-center">
                { 
-
+                 
                  renData != false ? renData.pager.pages.map((button,key,arr) => {
                    
                    if( renData.pager.currentPage == button ){
@@ -162,7 +216,16 @@ export default function Index(props) {
                    }
 
                  }) : '' 
+               
                }
+            </div>
+
+            <div style={{marginTop: '52px'}} className="text-center container ">
+                <div className="row" > 
+                  <div className="col-md-2" > <button onClick={handle_cancel} className="btn btn-danger" >Cancel</button> </div>
+                  <div className="col-md-8" > <input readOnly type="text" value="" className="w-100 form-control" placeholder="Activate Oratags"  /> </div>
+                  <div className="col-md-2" ><button onClick={activate}  className="btn btn-success" >Activate Oratags</button>  </div>
+                </div>
             </div>
           </div>
         </div>

@@ -59,15 +59,20 @@ export default function Layout({ title, children, auth }) {
               text-align: center;
             }
 
-      
-        `}</style>
-
-
-                <Sidebar />
-               <div id="main" className="layout-navbar">
-                 <Header auth={auth} />
-                 {children}
-              </div>
   
+          .mybox{
+            width: 25px;
+            height: 37px;
+           }
+
+        `}
+        
+        </style>
+
+              <Sidebar />
+              <div id="main" className="layout-navbar">
+                <Header auth={auth} />
+                {children}
+            </div>
      </>);
 }
